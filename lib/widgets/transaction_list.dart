@@ -12,9 +12,10 @@ TransactionList(this.transactions);
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(
-      children: transactions.map((e) {
-        return Card(
+      height: 400,
+      child: ListView.builder(
+        itemBuilder: (context, index){
+           return Card(
           child: Row(
             children: [
               Container(
@@ -24,21 +25,23 @@ TransactionList(this.transactions);
                   width: 2,
                 ),),
                 padding: EdgeInsets.all(10 ),
-                child: Text("\$  ${e.amount}", 
+                child: Text("\$  ${transactions[index ].amount}", 
                 style: TextStyle(color: Colors.purple, fontSize: 20, fontWeight: FontWeight.bold ),),
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start ,
                 children: [
-                  Text(e.title , style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
-                  Text(DateFormat.yMMMd().format(e.date), style: TextStyle(color: Colors.grey),), 
+                  Text(transactions[index] .title , style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+                  Text(DateFormat.yMMMd().format(transactions[index].date), style: TextStyle(color: Colors.grey),), 
                 ],
               )
             ],
           ),
-        );
-      }).toList() ),
+        ); 
+        },
+        itemCount: transactions.length ,
+      ),
     );
   }
 }

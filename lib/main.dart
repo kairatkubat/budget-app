@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shop/widgets/new_transaction.dart';
-import 'package:shop/widgets/user_transaction.dart';
+import 'package:shop/widgets/new_transaction.dart'; 
 import './widgets/transaction_list.dart';
+import './model/transaction.dart';
 
 void main() {
   runApp( MyApp());
 }
 
 class MyApp extends StatelessWidget {
+
   MyApp({super.key});
 
   // This widget is the root of your application.
@@ -25,36 +26,77 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class Shop extends StatelessWidget {
+class Shop extends StatefulWidget {
    
+  @override
+  State<Shop> createState() => _ShopState();
+}
+
+class _ShopState extends State<Shop> {
+
+  final List<Transaction> _userTransactions = [
+     Transaction(id: "tq", title: "Shoes", amount: 78.8, date: DateTime.now()),
+    Transaction(id: "t2", title: "Grocery ", amount: 7238, date: DateTime.now()),
+  ].toList(); 
+  void _addTransaction(String txtitle, double txamount){
+     final newTx = Transaction(
+      id: DateTime.now().toString(),
+       title: txtitle, 
+       amount: txamount, 
+       date: DateTime.now(),
+       );
+       setState(() {
+   _userTransactions.add(newTx);
+  });
+  }
   // ignore: non_constant_identifier_names
-  // late String TitleInput;
-  // late String amountInput;
-
-
+void _startAddTransaction(BuildContext ctx){
+  showModalBottomSheet<void>(context: ctx, builder:  (bCtx){ 
+     return GestureDetector(
+      onTap: (){},
+      child: NewTransaction(_addTransaction),
+      behavior: HitTestBehavior.opaque,
+      );
+  });
+}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-appBar: AppBar(actions: [], title: const Text("Shop "),),
-body: Column(
-  mainAxisAlignment: MainAxisAlignment.start  ,
-  crossAxisAlignment: CrossAxisAlignment.end,
-  children:[
-    Container(
-      width: double.infinity,
-      height: 60,
-      child: Card(
-        child: Text("Chart 1"),
-        color: Colors.red,
-        elevation: 5,
-        
-        
+appBar: AppBar(actions: <Widget>[
+IconButton(onPressed:() {
+  _startAddTransaction(context); 
+}, icon: Icon(Icons.add))
+], title: const Text("Shop "),),
+body:   Container(
+  height: 600,
+  child: ListView(
+    children:[
+      Container(
+        width: double.infinity,
+        height: 60,
+        child: Card(
+          margin: EdgeInsets.all(5),
+          child: Text("Chart 1"),
+          color: Colors.red,
+          elevation: 5,
+          
+          
+        ),
       ),
-    ),
-   UserTransaction(),
+     TransactionList(_userTransactions),
+      
+    ],
+  ),
+),
+floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat ,
+floatingActionButton: FloatingActionButton(
+  child: Icon(Icons.add),
+  onPressed: (() {
+    _startAddTransaction(context);
+  }
     
-  ],
-)
-    );
+ 
+)));
+  
   }} 
