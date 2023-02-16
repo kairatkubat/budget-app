@@ -12,8 +12,16 @@ TransactionList(this.transactions);
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 400,
-      child: ListView.builder(
+      height: 600,
+      child: transactions.isEmpty ? Column(
+            children: <Widget>[
+              Text("Not transactions added yet", style: Theme.of(context).textTheme.titleMedium ,
+              ),
+               Container(
+                height: 200,
+                child: Image.asset("assets/images/waiting.png", fit: BoxFit.cover ,))
+            ],
+          ) : ListView.builder(
         itemBuilder: (context, index){
            return Card(
           child: Row(

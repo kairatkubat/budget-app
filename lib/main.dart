@@ -18,8 +18,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flu',
       theme: ThemeData(
-       
-        primarySwatch: Colors.blue,
+        fontFamily: 'QuickSand',
+        primarySwatch: Colors.purple ,
+        accentColor: Colors.amber
       ),
       home: Shop(),
     );
@@ -35,9 +36,9 @@ class Shop extends StatefulWidget {
 class _ShopState extends State<Shop> {
 
   final List<Transaction> _userTransactions = [
-     Transaction(id: "tq", title: "Shoes", amount: 78.8, date: DateTime.now()),
-    Transaction(id: "t2", title: "Grocery ", amount: 7238, date: DateTime.now()),
-  ].toList(); 
+    //  Transaction(id: "tq", title: "Shoes", amount: 78.8, date: DateTime.now()),
+    // Transaction(id: "t2", title: "Grocery ", amount: 7238, date: DateTime.now()),
+  ]; 
   void _addTransaction(String txtitle, double txamount){
      final newTx = Transaction(
       id: DateTime.now().toString(),
@@ -63,22 +64,24 @@ void _startAddTransaction(BuildContext ctx){
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-appBar: AppBar(actions: <Widget>[
+appBar: AppBar(
+  
+  actions: <Widget>[
 IconButton(onPressed:() {
   _startAddTransaction(context); 
 }, icon: Icon(Icons.add))
-], title: const Text("Shop "),),
+], title: const Text("Personal Expenses "),),
 body:   Container(
   height: 600,
   child: ListView(
     children:[
       Container(
         width: double.infinity,
-        height: 60,
+        height: 80,
         child: Card(
           margin: EdgeInsets.all(5),
           child: Text("Chart 1"),
-          color: Colors.red,
+          color: Theme.of(context).primaryColorLight,
           elevation: 5,
           
           
@@ -91,12 +94,13 @@ body:   Container(
 ),
 floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat ,
 floatingActionButton: FloatingActionButton(
+
   child: Icon(Icons.add),
   onPressed: (() {
     _startAddTransaction(context);
   }
-    
- 
-)));
+)
+)
+);
   
   }} 
