@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/date_symbols.dart';
+import 'package:shop/widgets/chart.dart';
 import 'package:shop/widgets/new_transaction.dart'; 
 import './widgets/transaction_list.dart';
 import './model/transaction.dart';
@@ -39,6 +41,11 @@ class _ShopState extends State<Shop> {
     //  Transaction(id: "tq", title: "Shoes", amount: 78.8, date: DateTime.now()),
     // Transaction(id: "t2", title: "Grocery ", amount: 7238, date: DateTime.now()),
   ]; 
+
+  List <Transaction> get _recentTransactions {
+     return _userTransactions.where((tx) {
+      return tx.date.isAfter(DateTime.now().subtract(Duration(days: 7)));}).toList();
+  }
   void _addTransaction(String txtitle, double txamount){
      final newTx = Transaction(
       id: DateTime.now().toString(),
@@ -75,18 +82,7 @@ body:   Container(
   height: 600,
   child: ListView(
     children:[
-      Container(
-        width: double.infinity,
-        height: 80,
-        child: Card(
-          margin: EdgeInsets.all(5),
-          child: Text("Chart 1"),
-          color: Theme.of(context).primaryColorLight,
-          elevation: 5,
-          
-          
-        ),
-      ),
+     Chart(_recentTransactions),
      TransactionList(_userTransactions),
       
     ],
