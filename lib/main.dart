@@ -22,7 +22,32 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'QuickSand',
         primarySwatch: Colors.purple ,
-        accentColor: Colors.amber
+        accentColor: Colors.amber,
+        
+        secondaryHeaderColor: Colors.amber,
+        // textTheme: ThemeData.light().textTheme.copyWith(
+        //   titleSmall: TextStyle(
+        //     fontFamily: 'OpenSans',
+        //     fontWeight: FontWeight.bold,
+        //     fontSize: 18
+        //   ),
+        //   button:  TextStyle(color: Colors.white)
+        // )
+        textTheme: const TextTheme(
+          titleLarge: TextStyle(fontSize: 19, fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                
+                 // background color
+                textStyle: const TextStyle(
+                    fontSize: 22,
+                    fontFamily: 'QuickSand'
+                    ))),
       ),
       home: Shop(),
     );
