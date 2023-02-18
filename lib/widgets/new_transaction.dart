@@ -18,14 +18,19 @@ class _NewTransactionState extends State<NewTransaction> {
  DateTime ?_selectedDate;
 
 void _Ontap(){
+  if(_amountController.text.isEmpty){
+    return;
+  }
   final enteredTitle = _titleController.text;
   final enteredAmount = double.parse(_amountController.text);
-  if(enteredTitle.isEmpty || enteredAmount<=0){
+  if(enteredTitle.isEmpty || enteredAmount<=0 || _selectedDate == null){
     return;
   }
   widget.adTx(
      enteredTitle,
-     enteredAmount);
+     enteredAmount,
+     _selectedDate 
+     );
      Navigator.of(context).pop();
 }
 void _presentDatePicker(){
@@ -72,9 +77,11 @@ void _presentDatePicker(){
           Container(
             height: 70,
             child: Row(children: <Widget>[
-              Text(_selectedDate == null? 
-              "No date Chosen":
-               DateFormat.yMd().format(_selectedDate!)),
+              Expanded(
+                child: Text(_selectedDate == null? 
+                "No date Chosen":
+                 'Picked Date : ${DateFormat.yMd().format(_selectedDate!)}'),
+              ),
               TextButton(
                 style: TextButton.styleFrom(
                   // foregroundColor: Theme.of(context).primaryColor

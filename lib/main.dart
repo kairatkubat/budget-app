@@ -71,12 +71,12 @@ class _ShopState extends State<Shop> {
      return _userTransactions.where((tx) {
       return tx.date.isAfter(DateTime.now().subtract(Duration(days: 7)));}).toList();
   }
-  void _addTransaction(String txtitle, double txamount){
+  void _addTransaction(String txtitle, double txamount, DateTime choosenDate){
      final newTx = Transaction(
       id: DateTime.now().toString(),
        title: txtitle, 
        amount: txamount, 
-       date: DateTime.now(),
+       date: choosenDate,
        );
        setState(() {
    _userTransactions.add(newTx);
@@ -92,7 +92,11 @@ void _startAddTransaction(BuildContext ctx){
       );
   });
 }
-
+void _deleteTransaction(String id){
+setState(() {
+  _userTransactions.removeWhere((element) => element.id == id );
+});
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,7 +112,7 @@ body:   Container(
   child: ListView(
     children:[
      Chart(_recentTransactions),
-     TransactionList(_userTransactions),
+     TransactionList(_userTransactions, _deleteTransaction),
       
     ],
   ),
