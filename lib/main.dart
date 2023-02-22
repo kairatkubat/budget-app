@@ -61,7 +61,7 @@ class Shop extends StatefulWidget {
 }
 
 class _ShopState extends State<Shop> {
-
+bool _showChart = false;
   final List<Transaction> _userTransactions = [
     //  Transaction(id: "tq", title: "Shoes", amount: 78.8, date: DateTime.now()),
     // Transaction(id: "t2", title: "Grocery ", amount: 7238, date: DateTime.now()),
@@ -99,20 +99,42 @@ setState(() {
 }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-appBar: AppBar(
+    final appBar = AppBar(
   
   actions: <Widget>[
 IconButton(onPressed:() {
   _startAddTransaction(context); 
 }, icon: Icon(Icons.add))
-], title: const Text("Personal Expenses "),),
-body:   Container(
-  height: 600,
-  child: ListView(
-    children:[
-     Chart(_recentTransactions),
-     TransactionList(_userTransactions, _deleteTransaction),
+], title: const Text("Personal Expenses "),);
+    return Scaffold(
+appBar: appBar,
+body:   SingleChildScrollView(
+  child: Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children:<Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("Show chart"),
+            Switch(
+              activeColor: Theme.of(context).primaryColor,
+              
+              value: _showChart, onChanged: ( value) { 
+              setState(() {
+                  _showChart = value;
+              });
+            }, ),
+          ],
+        ),
+     _showChart? Container(
+      height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - 
+      MediaQuery.of(context).padding.top) * 0.3,
+      child: Chart(_recentTransactions)
+      ):
+     Container(
+       height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - 
+       MediaQuery.of(context).padding.top) * 0.7,
+      child: TransactionList(_userTransactions, _deleteTransaction)),
       
     ],
   ),

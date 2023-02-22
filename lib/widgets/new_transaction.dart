@@ -24,6 +24,7 @@ void _Ontap(){
   final enteredTitle = _titleController.text;
   final enteredAmount = double.parse(_amountController.text);
   if(enteredTitle.isEmpty || enteredAmount<=0 || _selectedDate == null){
+     print("hello");
     return;
   }
   widget.adTx(
@@ -95,6 +96,7 @@ void _presentDatePicker(){
 
           ElevatedButton(
                   onPressed: _Ontap,
+                  
                   child: const  Text('add transaction',
                   ),
                 ),
