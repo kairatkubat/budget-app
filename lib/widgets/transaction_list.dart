@@ -33,7 +33,17 @@ TransactionList(this.transactions, this.deleteTx);
           ),
           title: Text(transactions[index].title, style:  Theme.of(context).textTheme.titleLarge,),
           subtitle: Text(DateFormat.yMMMd().format(transactions[index].date)),
-          trailing:  IconButton(
+          trailing: MediaQuery.of(context).size.width >400 
+          ? TextButton.icon(
+            icon: Icon(Icons.delete),
+            label: Text("delete"),
+            style: TextButton.styleFrom(
+              foregroundColor: Theme.of(context).errorColor,
+            ),
+            onPressed: (() => deleteTx(transactions[index].id)),
+
+          ):
+          IconButton(
             color: Theme.of(context).errorColor,
             icon: Icon(Icons.delete ), onPressed:(() => deleteTx(transactions[index].id))  , ),
           ),

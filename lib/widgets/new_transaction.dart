@@ -1,6 +1,8 @@
-
+import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:shop/widgets/adaptive_button.dart';
 
 class NewTransaction extends StatefulWidget {
   
@@ -49,60 +51,57 @@ void _presentDatePicker(){
   @override
   Widget build(BuildContext context) { 
     return 
-    Card(child: Container(
-      padding: EdgeInsets.all(20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children:  [
-          TextField(
-            decoration: InputDecoration(
-              labelText: "Title",
-            ),
-            controller: _titleController,
-            onChanged: (value) {
-              // TitleInput = value;
-            },
-          ),
-           TextField(
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            decoration: InputDecoration(
-              labelText: "amount",
-              
-          ),
-          // onChanged: (value) {
-          //   amountInput = value;
-          // },
-          controller: _amountController,
-          onSubmitted: (_)=>_Ontap(),
-          ),
-          Container(
-            height: 70,
-            child: Row(children: <Widget>[
-              Expanded(
-                child: Text(_selectedDate == null? 
-                "No date Chosen":
-                 'Picked Date : ${DateFormat.yMd().format(_selectedDate!)}'),
-              ),
-              TextButton(
-                style: TextButton.styleFrom(
-                  // foregroundColor: Theme.of(context).primaryColor
-                ),
-                onPressed: _presentDatePicker, 
-                child: Text("Choose date", style: TextStyle(
-                  fontSize: 15 ,
-                  fontWeight: FontWeight.bold),))
-            ],),
-          ),
+    SingleChildScrollView(
+      child: Card(child: Container(
+        padding: EdgeInsets.only(top: 10, left: 10, right: 10,
+         bottom: MediaQuery.of(context).viewInsets.bottom + 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children:  [
+            CupertinoTextField(
 
-          ElevatedButton(
-                  onPressed: _Ontap,
-                  
-                  child: const  Text('add transaction',
-                  ),
+            ),
+            TextField( 
+              decoration: InputDecoration(
+                labelText: "Title",
+              ),
+              controller: _titleController,
+              onChanged: (value) {
+                // TitleInput = value;
+              },
+            ),
+             TextField(
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              decoration: InputDecoration(
+                labelText: "amount",
+                
+            ),
+            // onChanged: (value) {
+            //   amountInput = value;
+            // },
+            controller: _amountController,
+            onSubmitted: (_)=>_Ontap(),
+            ),
+            Container(
+              height: 70,
+              child: Row(children: <Widget>[
+                Expanded(
+                  child: Text(_selectedDate == null? 
+                  "No date Chosen":
+                   'Picked Date : ${DateFormat.yMd().format(_selectedDate!)}'),
                 ),
-        ],
+               AdaptiveButton(_presentDatePicker, "choose date")
+              ],),
+            ),
+             ElevatedButton(
+                    onPressed: _Ontap,
+                    child: const Text('add transaction',
+                    ),
+                  ),
+          ],
+        ),
       ),
-    ),
+      ),
     );
   }
 }
