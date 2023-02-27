@@ -99,10 +99,13 @@ void _deleteTransaction(String id){
 setState(() {
   _userTransactions.removeWhere((element) => element.id == id );
 });
+
+
 }
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
+    final medi = MediaQuery.of(context).size;  
     final isLandScape =  mediaQuery.orientation == Orientation.landscape;
     final cupAppbar = CupertinoNavigationBar(
       middle: Text("Personal Expenses"),
@@ -133,32 +136,8 @@ final eachbody =  SafeArea(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children:<Widget>[
-          if(isLandScape) Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("Show chart", style: Theme.of(context).textTheme.titleLarge ),
-              Switch.adaptive(
-                activeColor: Theme.of(context).primaryColor,
-                value: _showChart, onChanged: ( value) { 
-                setState(() {
-                    _showChart = value;
-                });
-              }, ),
-            ],
-          ),
-          if(!isLandScape)Container(
-            height: (mediaQuery.size.height - appBar.preferredSize.height - 
-            mediaQuery.padding.top) * 0.3,
-            child: Chart(_recentTransactions)
-            ),
-            if(!isLandScape) txList,
-  
-        if(isLandScape)_showChart? Container(
-            height: (mediaQuery.size.height - appBar.preferredSize.height - 
-            mediaQuery.padding.top) * 0.7,
-            child: Chart(_recentTransactions)
-            ):
-      txList 
+          if(isLandScape) ..._buildLandscape(appBar, txList),
+          if(!isLandScape) ..._buildPortraitscape(appBar, txList), 
       ],
     ),
   ),
@@ -180,4 +159,46 @@ floatingActionButton: Platform.isIOS? Container(): FloatingActionButton(
 )
 );
   
-  }} 
+  }
+  
+  List<Widget>_buildLandscape(
+AppBar appBar,
+  Widget txList,
+
+  ) {
+     return [Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("Show chart", style: Theme.of(context).textTheme.titleLarge ),
+              Switch.adaptive(
+                activeColor: Theme.of(context).primaryColor,
+                value: _showChart, onChanged: ( value) { 
+                setState(() {
+                    _showChart = value;
+                });
+              }, ),
+            ],
+          ),
+          _showChart? Container(
+            height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - 
+            MediaQuery.of(context).padding.top) * 0.7,
+            child: Chart(_recentTransactions)
+            ):
+      txList 
+          
+          
+          ];
+  }
+List <Widget>_buildPortraitscape(
+  AppBar appBar,
+  Widget txList,
+  ){
+  return [Container(
+            height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - 
+            MediaQuery.of(context).padding.top) * 0.3,
+            child: Chart(_recentTransactions)
+            ), txList];
+}
+
+  
+  } 

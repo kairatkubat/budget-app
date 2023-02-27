@@ -4,7 +4,7 @@ import 'package:shop/widgets/chart_bar.dart';
 import '../model/transaction.dart';
 class Chart extends StatelessWidget {
   final List<Transaction> recentTransactions;
-  Chart(this.recentTransactions);
+  const Chart(this.recentTransactions);
   List <Map<String,  Object>> get groupTransactionValues{
     return List.generate(7, (index) {
       final weekDay = DateTime.now().subtract(Duration(days: index));
@@ -13,7 +13,7 @@ class Chart extends StatelessWidget {
         if(recentTransactions[i].date.day == weekDay.day&&
         recentTransactions[i].date.month == weekDay.month &&
         recentTransactions[i].date.year == weekDay.year){
-           totalSum += recentTransactions[i].amount; 
+           totalSum = totalSum + recentTransactions[i].amount; 
         }
       } 
 
@@ -25,6 +25,9 @@ class Chart extends StatelessWidget {
   }
   double get totalSpending{
     groupTransactionValues.fold(0.0, (sum, item) {
+      print(item['amount'] as double);
+      print("hello");
+      print(sum);
       return  sum + (item['amount'] as double) ;
     });
     return 0;
