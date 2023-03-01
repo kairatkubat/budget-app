@@ -8,16 +8,44 @@ class NewTransaction extends StatefulWidget {
   
   final Function adTx;
 
-  NewTransaction(this.adTx);
+  NewTransaction(this.adTx){
+    print("Costructor New transaction widget");
+  }
 
   @override
-  State<NewTransaction> createState() => _NewTransactionState();
+  State<NewTransaction> createState() {
+    print(" Create State NewTransaction Widget ");
+    return _NewTransactionState();
+    }
 }
 
 class _NewTransactionState extends State<NewTransaction> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
  DateTime ?_selectedDate;
+ _NewTransactionState(){
+  print("Constractor new transaction State");
+ }
+
+ @override
+  void initState() {
+    super.initState();
+    print("Init state ");
+    
+  }
+
+  @override
+  void didUpdateWidget(covariant NewTransaction oldWidget) {
+     print("Did update widget ");
+     super.didUpdateWidget(oldWidget);
+     
+  }
+
+  @override
+  void dispose() {
+    print("Dispose widget");
+    super.dispose();
+  }
 
 void _Ontap(){
   if(_amountController.text.isEmpty){
@@ -26,7 +54,7 @@ void _Ontap(){
   final enteredTitle = _titleController.text;
   final enteredAmount = double.parse(_amountController.text);
   if(enteredTitle.isEmpty || enteredAmount<=0 || _selectedDate == null){
-     print("hello");
+    
     return;
   }
   widget.adTx(

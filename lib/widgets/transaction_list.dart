@@ -19,14 +19,22 @@ TransactionList(this.transactions, this.deleteTx);
               height: 200,
               child: Image.asset('lib/assets/images/23.png'))
             
-          ],
-        ) : ListView.builder(
-      itemBuilder: (context, index){
-        return TransactionItemWidget(transaction: transactions[index], deleteTx: deleteTx);  
+          ],):
+    //     ) : ListView.builder(
+    //   itemBuilder: (context, index){
+    //     return TransactionItemWidget(transaction: transactions[index], deleteTx: deleteTx);  
     
-      },
-      itemCount: transactions.length ,
-    );
+    //   },
+    //   itemCount: transactions.length ,
+    // );
+ListView(
+  children: [
+    ...transactions.map((e) => TransactionItemWidget(
+      key: ValueKey(e.id),
+      transaction: e, deleteTx: deleteTx)).toList(),
+  ],
+);
   }
 }
 
+ //return TransactionItemWidget(transaction: transactions[index], deleteTx: deleteTx); 

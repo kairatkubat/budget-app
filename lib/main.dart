@@ -63,8 +63,29 @@ class Shop extends StatefulWidget {
   State<Shop> createState() => _ShopState();
 }
 
-class _ShopState extends State<Shop> {
+class _ShopState extends State<Shop>with WidgetsBindingObserver{
 bool _showChart = false;
+
+@override
+  void initState() {
+    WidgetsBinding.instance.addObserver(this);
+    super.initState();
+  }
+
+@override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // TODO: implement didChangeAppLifecycleState
+    print(state);
+     
+  }
+
+@override
+  void dispose() {
+    // TODO: implement dispose
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
   final List<Transaction> _userTransactions = [
     //  Transaction(id: "tq", title: "Shoes", amount: 78.8, date: DateTime.now()),
     // Transaction(id: "t2", title: "Grocery ", amount: 7238, date: DateTime.now()),
@@ -87,7 +108,9 @@ bool _showChart = false;
   }
   // ignore: non_constant_identifier_names
 void _startAddTransaction(BuildContext ctx){
-  showModalBottomSheet<void>(context: ctx, builder:  (bCtx){ 
+  showModalBottomSheet(
+    context: ctx,
+     builder:  (_){ 
      return GestureDetector(
       onTap: (){},
       child: NewTransaction(_addTransaction),
@@ -160,7 +183,11 @@ floatingActionButton: Platform.isIOS? Container(): FloatingActionButton(
 );
   
   }
-  
+  _buildAppbar(){
+
+  }
+
+
   List<Widget>_buildLandscape(
 AppBar appBar,
   Widget txList,
@@ -199,6 +226,4 @@ List <Widget>_buildPortraitscape(
             child: Chart(_recentTransactions)
             ), txList];
 }
-
-  
   } 

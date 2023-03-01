@@ -25,9 +25,9 @@ class Chart extends StatelessWidget {
   }
   double get totalSpending{
     groupTransactionValues.fold(0.0, (sum, item) {
-      print(item['amount'] as double);
-      print("hello");
-      print(sum);
+      // print(item['amount'] as double);
+      // print("hello");
+      // print(sum);
       return  sum + (item['amount'] as double) ;
     });
     return 0;
